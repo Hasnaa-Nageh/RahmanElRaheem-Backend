@@ -9,6 +9,8 @@ const corsOptions = require("./config/corsOptions");
 const rootRoute = require("./routes/root.routes");
 const path = require("path");
 const notFound = require("./middlewares/notFound");
+const swaggerSpec = require("./swagger");
+const swaggerUI = require("swagger-ui-express");
 connectDB();
 
 app.use(cors(corsOptions));
@@ -16,7 +18,8 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/", rootRoute);
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerSpec));
+app.use("/api/v1", rootRoute);
 
 app.use(notFound);
 
