@@ -7,7 +7,7 @@ const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-const Register = async (req, res) => {
+const Register = async (req, res, next) => {
   try {
     const { first_name, last_name, email, password } = req.body;
 
@@ -46,11 +46,11 @@ const Register = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ message: "Server Error" });
+    next(err);
   }
 };
 
-const Login = async (req, res) => {
+const Login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
@@ -86,11 +86,11 @@ const Login = async (req, res) => {
     });
   } catch (err) {
     console.log(err);
-    res.status(500).json({ message: "Server Error" });
+    next(err);
   }
 };
 
-const refreshToken = async (req, res) => {
+const refreshToken = async (req, res, next) => {
   try {
     const cookies = req.cookies;
 
@@ -119,11 +119,11 @@ const refreshToken = async (req, res) => {
     );
   } catch (err) {
     console.log(err);
-    res.status(500).json({ message: "Server Error" });
+    next(err);
   }
 };
 
-const logOut = async (req, res) => {
+const logOut = async (req, res, next) => {
   try {
     const cookies = req.cookies;
     if (!cookies?.jwt) {
@@ -137,7 +137,7 @@ const logOut = async (req, res) => {
     res.status(200).json({ message: "Logout Successfully" });
   } catch (err) {
     console.log(err);
-    res.status(500).json({ message: "Server Error" });
+    next(err);
   }
 };
 
