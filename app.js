@@ -15,6 +15,10 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 
+router.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "..", "views", "index.html"));
+});
+
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 app.use("/api/v1", rootRoute);
 
