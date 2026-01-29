@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "..", "views", "index.html"));
+  res.json({message:"Backend Server is Running"});
 });
 
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerSpec));
