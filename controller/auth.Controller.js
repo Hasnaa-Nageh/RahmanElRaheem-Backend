@@ -34,8 +34,8 @@ const Register = async (req, res, next) => {
     const refreshToken = generateRefreshToken(user);
 
     res.cookie("jwt", refreshToken, {
-      httpOnly: true,
-      secure: true,
+      // httpOnly: true,
+      // secure: true,
       sameSite: "None",
       maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
     });
@@ -73,8 +73,8 @@ const Login = async (req, res, next) => {
     const refreshToken = generateRefreshToken(foundUser);
 
     res.cookie("jwt", refreshToken, {
-      httpOnly: true,
-      secure: true,
+      // httpOnly: true,
+      // secure: true,
       sameSite: "None",
       maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
     });
@@ -130,8 +130,8 @@ const logOut = async (req, res, next) => {
       return res.status(204);
     }
     res.clearCookie("jwt", {
-      httpOnly: true,
-      sameSite: "None",
+      // httpOnly: true,
+      // sameSite: "None",
       secure: "true",
     });
     res.status(200).json({ message: "Logout Successfully" });
