@@ -59,7 +59,11 @@ const getSinglePatient = async (req, res, next) => {
     if (!patient) {
       return res.status(404).json({ message: "Patient Not Found" });
     }
-    res.status(200).json({ data: patient });
+
+    res.status(200).json({
+      status: "success",
+      data: patient,
+    });
   } catch (err) {
     console.log(err);
     next(err);
@@ -130,7 +134,6 @@ const deletePatient = async (req, res, next) => {
     next(err);
   }
 };
-
 //----------------------------------------
 
 // Visits
@@ -163,6 +166,7 @@ const AddVisit = async (req, res, next) => {
     next(err);
   }
 };
+//------------------------------------------
 
 const deleteVisit = async (req, res, next) => {
   try {
@@ -178,18 +182,17 @@ const deleteVisit = async (req, res, next) => {
     next(err);
   }
 };
+//------------------------------------------
 
 const updateVisit = async (req, res, next) => {
   try {
     const { visitId } = req.params;
 
     const patient = await Patient.findOne({ "visits._id": visitId });
-    if (!patient)
-      return res.status(404).json({ error: "Visit not found" });
+    if (!patient) return res.status(404).json({ error: "Visit not found" });
 
     const visit = patient.visits.id(visitId);
-    if (!visit)
-      return res.status(404).json({ error: "Visit not found" });
+    if (!visit) return res.status(404).json({ error: "Visit not found" });
 
     Object.assign(visit, req.body);
 
@@ -204,7 +207,7 @@ const updateVisit = async (req, res, next) => {
     next(err);
   }
 };
-
+//------------------------------------------
 
 const getPatientSummary = async (req, res, next) => {
   try {
@@ -224,6 +227,7 @@ const getPatientSummary = async (req, res, next) => {
     next(err);
   }
 };
+//------------------------------------------
 
 const getFullReport = async (req, res, next) => {
   try {
@@ -236,6 +240,7 @@ const getFullReport = async (req, res, next) => {
     next(err);
   }
 };
+//------------------------------------------
 
 module.exports = {
   createPatient,
